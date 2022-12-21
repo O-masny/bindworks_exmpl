@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:bindworks_exmpl/components/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {
@@ -6,12 +6,6 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [],
-        ),
-      ),
-    );
+    return const CorePage();
   }
 }

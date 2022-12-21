@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'items.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 2)
 class Items extends HiveObject {
   @HiveField(0)
   final String url;
@@ -12,4 +12,7 @@ class Items extends HiveObject {
   final String password;
 
   Items({required this.url, required this.name, required this.password});
+
+
+
 }

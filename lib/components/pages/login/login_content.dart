@@ -1,8 +1,9 @@
 import 'package:bindworks_exmpl/components/submit_button.dart';
 import 'package:flutter/material.dart';
-
-import '../services/modal_dialog.dart';
-import '../services/storage.dart';
+import '../../../models/arguments/login_args.dart';
+import '../../../models/user/user.dart';
+import '../../../services/modal_dialog.dart';
+import '../../../services/storage.dart';
 import 'login_field.dart';
 
 class LoginContent extends StatefulWidget {
@@ -81,20 +82,21 @@ class _LoginContentState extends State<LoginContent> {
           ],
         );
 
-  void canProceed({bool lostPassword = false}) {
+  Future<void> canProceed({bool lostPassword = false}) async {
+    UserStorage storage = UserStorage();
     if (lostPassword) {}
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     final password = passwordController.text;
     final name = nameController.text;
 
-    if (!regex.hasMatch(password)) {
+    if (!regex.hasMatch(password) || name.isEmpty) {
       ModalDialog.showAlert(context, AlertType.WRONG);
     } else {
-      UserStorage.setLoginName(name);
-      UserStorage.setLoginPassword(password);
+      User user = User(id: 1, password: password, name: name);
+      await user.cacheUser(user);
+      await storage.saveUserPassword(password);
       Navigator.pushNamed(context, '/homepage');
     }
   }
 }
-

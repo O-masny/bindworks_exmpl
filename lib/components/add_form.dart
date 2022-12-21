@@ -1,8 +1,10 @@
 import 'package:bindworks_exmpl/components/submit_button.dart';
+import 'package:bindworks_exmpl/models/items/items.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bindworks_exmpl/services/modal_dialog.dart';
-import 'login_field.dart';
+import '../services/storage.dart';
+import 'pages/login/login_field.dart';
 
 class AddForm extends StatefulWidget {
   const AddForm({Key? key}) : super(key: key);
@@ -98,7 +100,7 @@ class _AddFormState extends State<AddForm> {
 
   void toggle() {}
 
-  void canProceed() {
+  Future<void> canProceed() async {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     final password = passwordController.text;
@@ -108,7 +110,10 @@ class _AddFormState extends State<AddForm> {
     if (!regex.hasMatch(password)) {
       ModalDialog.showAlert(context, AlertType.WEAK);
     } else {
-      Navigator.pushNamed(context, '/homepage');
+      Items item = Items(url: url, name: name, password: password);
+      await UserStorage().cacheItem(item).then(
+            (value) => Navigator.pushNamed(context, '/homepage'),
+          );
     }
   }
 }

@@ -1,23 +1,25 @@
-import 'dart:math';
 import 'package:bindworks_exmpl/components/add_form.dart';
 import 'package:bindworks_exmpl/models/user/user.dart';
-import 'package:bindworks_exmpl/services/storage.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:bindworks_exmpl/components/detail_page.dart';
+import 'package:bindworks_exmpl/components/pages/detail_page.dart';
 import 'package:bindworks_exmpl/models/items/items.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'components/home_page.dart';
-import 'components/login_page.dart';
+import 'components/pages/home_page.dart';
+import 'components/pages/login/login_page.dart';
 
 late Box box;
 
 void main() async {
-  // await Hive.initFlutter();
-  // box = await Hive.openBox('box');
-
-// box.put('name', 'a');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(1)) {
+    Hive.registerAdapter(UserAdapter());
+  }
+  //await Hive.deleteBoxFromDisk('items');
+  if (!Hive.isAdapterRegistered(2)) {
+    Hive.registerAdapter(ItemsAdapter());
+  }
   runApp(const MyApp());
 }
 
@@ -33,11 +35,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/detail': (context) => const DetailPage(),
         '/loginPage': (context) => const LoginPage(),
-        '/homepage': (context) => HomePage(item),
+        '/homepage': (context) => const HomePage(),
         '/addForm': (context) => const AddForm(),
       },
       initialRoute: '/',
-      theme: ThemeData(backgroundColor: Colors.red, primaryColor: Colors.black),
+      theme: ThemeData(primaryColor: Colors.black),
       home: const LoginPage(),
     );
   }
