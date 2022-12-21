@@ -1,6 +1,7 @@
+import 'package:bindworks_exmpl/components/submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:bindworks_exmpl/services/modal_dialog.dart';
 import 'login_field.dart';
 
 class AddForm extends StatefulWidget {
@@ -105,42 +106,9 @@ class _AddFormState extends State<AddForm> {
     final url = urlController.text;
 
     if (!regex.hasMatch(password)) {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => const AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text('Weak password'),
-          content: Text('Please provide strong password'),
-        ),
-      );
+      ModalDialog.showAlert(context, AlertType.WEAK);
     } else {
-
       Navigator.pushNamed(context, '/homepage');
     }
-  }
-}
-
-class SubmitButton extends StatelessWidget {
-  const SubmitButton({this.title = '', this.callback, Key? key})
-      : super(key: key);
-  final String? title;
-  final VoidCallback? callback;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: callback ?? () {},
-      child: Container(
-        height: 40,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.white),
-        alignment: Alignment.center,
-        child: Text(
-          title ?? 'Add password',
-          style: const TextStyle(fontSize: 20),
-        ),
-      ),
-    );
   }
 }

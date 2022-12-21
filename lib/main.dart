@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'Password Keeper',
       routes: {
         '/detail': (context) => const DetailPage(),
-        '/home': (context) => const LoginPage(),
+        '/loginPage': (context) => const LoginPage(),
         '/homepage': (context) => HomePage(item),
         '/addForm': (context) => const AddForm(),
       },

@@ -14,6 +14,12 @@ class LoginField extends StatelessWidget {
     return TextField(
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
         suffix: callback != null
             ? GestureDetector(
                 onTap: callback ?? () {},
@@ -28,7 +34,6 @@ class LoginField extends StatelessWidget {
           style: const TextStyle(color: Colors.white),
         ),
         hintText: label ?? 'Password',
-        alignLabelWithHint: true,
         hintStyle: const TextStyle(color: Colors.white),
       ),
       obscureText: isObscure ?? false,

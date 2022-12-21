@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../services/storage.dart';
 import 'login_content.dart';
-import 'login_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,10 +15,10 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 'PASSWORD LOCKER',
@@ -36,10 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 size: 100,
                 color: Colors.white.withOpacity(0.7),
               ),
-              LoginContent(
-                '',
-                () {},
-              ),
+              const LoginContent(),
             ],
           ),
         ),
@@ -47,6 +41,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-
