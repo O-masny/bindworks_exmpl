@@ -16,7 +16,8 @@ class _ItemRowState extends State<ItemRow> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/detail'),
+      onTap: () =>
+          Navigator.pushNamed(context, '/detail', arguments: widget.item),
       child: Container(
         height: 40,
         decoration: BoxDecoration(

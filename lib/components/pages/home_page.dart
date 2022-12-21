@@ -44,15 +44,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget floationButton = FloatingActionButton(
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      onPressed: () {
+        Navigator.pushNamed(context, '/addForm');
+      },
+      child: const Icon(Icons.add),
+    );
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        onPressed: () {
-          Navigator.pushNamed(context, '/addForm');
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: floationButton,
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
@@ -105,25 +106,32 @@ class _HomePageState extends State<HomePage> {
 }
 
 class CorePage extends StatelessWidget {
-  const CorePage({this.title, this.widgets, this.leading, Key? key})
+  CorePage(this.widget,
+      {this.title, this.floatingActionButton, this.leading, Key? key})
       : super(key: key);
   final String? title;
   final Widget? leading;
-  final List<Widget>? widgets;
+  final Widget? floatingActionButton;
+  final Widget widget;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      floatingActionButton: floatingActionButton,
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text(title ?? ''),
+        title: Text(
+          title ?? 'Password Locker',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: leading,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [],
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SafeArea(
+          child: widget,
         ),
       ),
     );
