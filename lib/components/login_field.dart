@@ -12,17 +12,17 @@ class LoginField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         suffix: callback != null
             ? GestureDetector(
                 onTap: callback ?? () {},
-                child: Icon(
+                child: const Icon(
                   Icons.remove_red_eye,
                   color: Colors.white,
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         label: Text(
           label ?? 'Password',
           style: const TextStyle(color: Colors.white),
