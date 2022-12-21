@@ -25,26 +25,8 @@ class UserStorage {
   static Future setPassword(String password) async =>
       await _storage.write(key: _password, value: password);
 
-  Future<String> getUserPassword() async {
-    try {
-      final secureKey = await _storage.read(key: 'en_password');
-      List<int> encryptionKey =
-          (json.decode(secureKey ?? '') as List<dynamic>).cast<int>();
-      final encryptedBox =
-          await Hive.openBox('login', encryptionKey: encryptionKey);
-      String password = encryptedBox.get('password');
-
-      encryptedBox.close();
-
-      return password;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
   Future<void> saveUserPassword(String password) async {
     try {
-      //BOX_NAME is any string key for you box name.
       print(password);
       final secureKey = Hive.generateSecureKey();
       final encryptedBox =
@@ -52,7 +34,6 @@ class UserStorage {
       await encryptedBox.put('password', password);
       print(encryptedBox.values.toString());
 
-      //SECURE_STORAGE_KEY is any string key.
       await _storage.write(
         key: 'en_password',
         value: json.encode(secureKey),

@@ -1,7 +1,6 @@
 import 'package:bindworks_exmpl/components/submit_button.dart';
 import 'package:bindworks_exmpl/models/items/items.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bindworks_exmpl/services/modal_dialog.dart';
 import '../services/storage.dart';
 import 'pages/login/login_field.dart';
@@ -67,7 +66,7 @@ class _AddFormState extends State<AddForm> {
                   child: const Text(
                     'Add new password with URL and NAME',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 30),
+                    style: TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),
               ),

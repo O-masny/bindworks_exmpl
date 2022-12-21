@@ -1,7 +1,5 @@
 import 'package:bindworks_exmpl/models/user/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import '../../models/items/items.dart';
 import '../../services/storage.dart';
@@ -42,18 +40,20 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  static const TextStyle classic_style =
+  TextStyle(color: Colors.white, fontSize: 16);
+
   @override
   Widget build(BuildContext context) {
-    Widget floationButton = FloatingActionButton(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      onPressed: () {
-        Navigator.pushNamed(context, '/addForm');
-      },
-      child: const Icon(Icons.add),
-    );
     return Scaffold(
-      floatingActionButton: floationButton,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        onPressed: () {
+          Navigator.pushNamed(context, '/addForm');
+        },
+        child: const Icon(Icons.add),
+      ),
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(
@@ -61,11 +61,7 @@ class _HomePageState extends State<HomePage> {
           textAlign: TextAlign.center,
         ),
         leading: Center(
-          child: Text(
-            name,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16),
-          ),
+          child: Text(name, style: classic_style),
         ),
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -76,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             items.isNotEmpty
                 ? 'Your saved data'
                 : 'Save your data for later usage!',
-            style: TextStyle(color: Colors.white, fontSize: 25),
+            style: classic_style,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 40),
@@ -88,12 +84,10 @@ class _HomePageState extends State<HomePage> {
               }
               if (snapshot.hasData) {
                 return ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
                   shrinkWrap: true,
                   itemCount: snapshot.data.length,
-                  itemBuilder: (_, index) => ItemRow(
-                    snapshot.data[index],
-                  ),
+                  itemBuilder: (_, index) =>
+                      ItemRow(snapshot.data[index], index),
                 );
               }
               return Container();
@@ -105,35 +99,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class CorePage extends StatelessWidget {
-  CorePage(this.widget,
-      {this.title, this.floatingActionButton, this.leading, Key? key})
-      : super(key: key);
-  final String? title;
-  final Widget? leading;
-  final Widget? floatingActionButton;
-  final Widget widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      floatingActionButton: floatingActionButton,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        title: Text(
-          title ?? 'Password Locker',
-          style: TextStyle(color: Colors.white),
-        ),
-        leading: leading,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SafeArea(
-          child: widget,
-        ),
-      ),
-    );
-  }
-}
