@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   static const TextStyle classic_style =
-  TextStyle(color: Colors.white, fontSize: 16);
+      TextStyle(color: Colors.white, fontSize: 16);
 
   @override
   Widget build(BuildContext context) {
@@ -98,4 +98,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

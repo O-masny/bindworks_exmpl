@@ -106,7 +106,7 @@ class _AddFormState extends State<AddForm> {
     final name = nameController.text;
     final url = urlController.text;
 
-    if (!regex.hasMatch(password)) {
+    if (!regex.hasMatch(password) || name.isEmpty || url.isEmpty) {
       ModalDialog.showAlert(context, AlertType.WEAK);
     } else {
       Items item = Items(url: url, name: name, password: password);

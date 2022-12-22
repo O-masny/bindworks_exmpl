@@ -29,7 +29,7 @@ class User extends HiveObject {
           password: userModel.password);
 
       //CACHE_BOX_NAME is any string key
-      final userBox = await Hive.openBox('user');
+      final userBox = await Hive.openBox('user/$id');
       await userBox.put('userData', cacheUser);
       print(userBox.keys.toString());
     } on Exception {

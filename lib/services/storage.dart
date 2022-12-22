@@ -43,15 +43,16 @@ class UserStorage {
     }
   }
 
-  Future<void> cacheItem(Items items) async {
+  Future<void> cacheItem(Items items, {int? id}) async {
     try {
-      final Items cacheUser =
+      final Items cacheItem =
           Items(url: items.url, name: items.name, password: items.password);
       final userBox = await Hive.openBox('items');
-      userBox.add(cacheUser);
-      print(cacheUser.name);
-      print(cacheUser.url);
-      print(cacheUser.password);
+      userBox.add(cacheItem);
+
+      print(cacheItem.name);
+      print(cacheItem.url);
+      print(cacheItem.password);
     } on Exception {
       throw Exception();
     }
@@ -61,9 +62,9 @@ class UserStorage {
     items.add(item);
   }
 
-  Future<List<Items>> getPersistedItems() async {
+  Future<List<Items>> getPersistedItems({int? id}) async {
     try {
-      final userBox = await Hive.openBox('items');
+      final userBox = await Hive.openBox('items/$id');
       items = userBox.values.cast<Items>().toList();
     } catch (e) {
       if (kDebugMode) {

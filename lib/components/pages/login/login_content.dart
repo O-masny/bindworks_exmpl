@@ -54,49 +54,63 @@ class _LoginContentState extends State<LoginContent> {
                       forgottenPassword = !forgottenPassword;
                     }),
                 child: const Text(
-                  'Lost your password?',
+                  'Have an account?',
                   style: TextStyle(color: Colors.white),
                 )),
             const SizedBox(
               height: 30,
             ),
             SubmitButton(
-              title: 'LOGIN',
-              callback: canProceed,
+              title: 'Register',
+              callback: () => canProceed(context),
             )
           ],
         )
       : Column(
           children: [
+            const Text(
+              'Insert password',
+              style: TextStyle(color: Colors.white),
+            ),
             LoginField(
-              nameController,
-              label: 'Name',
+              passwordController,
+              label: 'Password',
             ),
             const SizedBox(
               height: 40,
             ),
             SubmitButton(
               title: 'LOGIN',
-              callback: () => canProceed(lostPassword: true),
+              callback: () => canProceed(context, login: true).then(
+                  (value) => Navigator.pushNamed(context, '/homepage'),
+                  onError: () =>
+                      ModalDialog.showAlert(context, AlertType.WRONG)),
             )
           ],
         );
 
-  Future<void> canProceed({bool lostPassword = false}) async {
+  Future<void> canProceed(BuildContext context, {bool login = false}) async {
     UserStorage storage = UserStorage();
-    if (lostPassword) {}
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     final password = passwordController.text;
     final name = nameController.text;
-
+    User user = await storage.getPersistedUser();
     if (!regex.hasMatch(password) || name.isEmpty) {
       ModalDialog.showAlert(context, AlertType.WRONG);
-    } else {
-      User user = User(id: 1, password: password, name: name);
-      await user.cacheUser(user);
-      await storage.saveUserPassword(password);
-      Navigator.pushNamed(context, '/homepage');
+      return;
     }
+    if (login) {
+      if (password == user.password) {
+        return;
+      } else {
+        ModalDialog.showAlert(context, AlertType.WRONG);
+        return;
+      }
+    }
+    User registerUser = User(id: 1, password: password, name: name);
+    await user.cacheUser(registerUser);
+    await storage.saveUserPassword(password);
+    Navigator.pushNamed(context, '/homepage');
   }
 }
