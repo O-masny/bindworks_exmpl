@@ -20,21 +20,21 @@ class User extends HiveObject {
       required this.name,
       required this.password});
 
-  Future<void> cacheUser(User userModel) async {
+  Future<User?> cacheUser(User userModel) async {
     try {
-      final User cacheUser = User(
+      final userBox = await Hive.openBox<User?>('user');
+
+      final cacheUser = User(
           items: userModel.items,
           id: userModel.id,
           name: userModel.name,
           password: userModel.password);
 
-      //CACHE_BOX_NAME is any string key
-      final userBox = await Hive.openBox('user/$id');
-      await userBox.put('userData', cacheUser);
+      userBox.add(cacheUser);
       print(userBox.keys.toString());
+      print(userBox.getAt(0));
     } on Exception {
       throw Exception();
     }
   }
-
 }

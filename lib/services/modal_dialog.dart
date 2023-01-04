@@ -7,7 +7,7 @@ String title(AlertType type) =>
 
 String content(AlertType type) => type == AlertType.WEAK
     ? 'Please provide strong password'
-    : 'Please provide correct password';
+    : 'Please provide correct credentials';
 
 class ModalDialog {
   static void showAlert(BuildContext ctx, AlertType type) {

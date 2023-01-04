@@ -110,7 +110,7 @@ class _AddFormState extends State<AddForm> {
       ModalDialog.showAlert(context, AlertType.WEAK);
     } else {
       Items item = Items(url: url, name: name, password: password);
-      await UserStorage().cacheItem(item).then(
+      await ItemStorage().cacheItem(item).then(
             (value) => Navigator.pushNamed(context, '/homepage'),
           );
     }
