@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+AndroidOptions _getAndroidOptions() => const AndroidOptions(
+      encryptedSharedPreferences: true,
+    );
+
 class UserSecureStorage {
-  static final _storage = FlutterSecureStorage();
+  static final _storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
   static const _keyUsername = 'username';
   static const _keyPassword = 'password';
